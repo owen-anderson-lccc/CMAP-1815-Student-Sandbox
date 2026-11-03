@@ -1,0 +1,177 @@
+/*
+====================================================================
+CMAP 1815: Introduction to Modern SQL
+Unit 1 Applied SQL Lab: Data Exploration & Orientation
+Starter Template File (100 Points Total)
+====================================================================
+Student Name : Owen Anderson
+Submission   : lab1_yourlastname.sql
+Due Date     : Friday at 11:59 PM (Midnight MT)
+
+Grading Rubric Summary (100 Points):
+- Query Accuracy & Execution (40 Pts)
+- Formatting & SQL Standards: UPPERCASE keywords, multi-line (20 Pts)
+- Precision Projection & Aliasing: AS snake_case (20 Pts)
+- Sorting & DISTINCT Logic (10 Pts)
+- Environment & System Catalogs (10 Pts)
+====================================================================
+*/
+
+-- ==================================================================
+-- PART 1: ENVIRONMENT & SYSTEM CATALOGS (20 Points)
+-- ==================================================================
+
+-- Challenge 1: Server Version
+-- Write a query to display the exact version of PostgreSQL running on your server.
+SELECT version();
+
+
+
+
+-- Challenge 2: Current Session Metadata
+-- Write a query to display your current active database user and the connected database name.
+SELECT
+   current_user AS current_user_name,
+   current_database() AS database_name;
+
+
+-- Challenge 3: Public Table Discovery
+-- Query information_schema.tables to list all user base table names in the 'public' schema,
+-- sorted alphabetically by table name.
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
+   AND table_type = 'BASE TABLE'
+ORDER BY table_name ASC;
+
+
+
+
+-- Challenge 4: Column Inspector for Employees
+-- Query information_schema.columns to display column_name, data_type, and is_nullable
+-- for the 'employees' table, sorted by ordinal_position ASC.
+SELECT column_name, data_type, is_nullable
+FROM information_schema.columns
+WHERE table_name = 'employees'
+ORDER BY ordinal_position ASC;
+
+
+
+
+-- ==================================================================
+-- PART 2: PRECISION PROJECTION & DATA EXPLORATION (40 Points)
+-- ==================================================================
+
+-- Challenge 5: Staff Directory
+-- From the 'employees' table, retrieve first_name, last_name, and title.
+-- Sort alphabetically by last_name ASC.
+SELECT first_name, last_name, title
+FROM employees
+ORDER BY last_name ASC
+
+
+-- Challenge 6: Executive Compensation Roster
+-- Retrieve first_name, last_name, and salary for all employees.
+-- Sort from highest paid to lowest paid (DESC).
+SELECT first_name, last_name, salary
+FROM employees
+ORDER BY salary DESC;
+
+
+
+-- Challenge 7: Unique Departments
+-- Write a query that returns a list of all distinct departments in the company,
+-- sorted alphabetically from A to Z.
+SELECT DISTINCT department
+FROM employees
+ORDER BY department ASC;
+
+
+
+
+
+-- Challenge 8: Department-Title Roster
+-- Find all unique combinations of department and title across the company.
+-- Order by department ASC, then by title ASC.
+SELECT DISTINCT department, title
+FROM employees
+ORDER BY department ASC, title ASC;
+
+
+
+
+-- ==================================================================
+-- PART 3: EXPRESSIONS, ALIASES & MATHEMATICAL PROJECTIONS (40 Points)
+-- ==================================================================
+
+-- Challenge 9: Polished Full Name with String Concatenation
+-- Query 'employees' combining first_name and last_name into a single column
+-- aliased as 'full_name' using string concatenation (||), along with their department.
+-- Sort by department ASC, then by full_name ASC.
+SELECT
+   department,
+   first_name || ' ' || last_name AS full_name
+FROM
+   employees
+ORDER BY 
+   department ASC,
+   full_name ASC;
+
+
+
+
+-- Challenge 10: Bonus Simulation
+-- Query 'employees' displaying:
+--   - last_name
+--   - salary AS base_salary
+--   - bonus AS annual_bonus
+--   - salary + bonus AS total_compensation
+-- (Observe what happens for employees with no bonus!)
+SELECT
+   last_name,
+   salary AS base_salary,
+   bonus AS annual_bonus,
+   salary + bonus AS total_compensation
+FROM
+   employees;
+
+
+
+
+-- Challenge 11: Retail Product Margins
+-- From the 'products' table, retrieve:
+--   - product_name
+--   - retail_price
+--   - cost_to_produce
+--   - calculated column (retail_price - cost_to_produce) aliased as estimated_unit_profit
+-- Sort so the most profitable products appear first (DESC).
+SELECT
+   product_name,
+   retail_price,
+   cost_to_produce,
+   (retail_price - cost_to_produce) AS estimated_unit_profit
+FROM 
+   products
+ORDER BY
+   estimated_unit_profit DESC;
+
+
+
+
+-- Challenge 12: Total Inventory Value Analysis
+-- From the 'products' table, project:
+--   - product_name
+--   - stock_quantity
+--   - retail_price
+--   - calculated column (stock_quantity * retail_price) aliased as total_inventory_value
+-- Sort from highest inventory value to lowest (DESC).
+SELECT
+   product_name,
+   stock_quantity,
+   retail_price,
+   (stock_quantity * retail_price) AS total_inventory_value
+   FROM
+      products
+   ORDER BY 
+      total_inventory_value DESC;
+
