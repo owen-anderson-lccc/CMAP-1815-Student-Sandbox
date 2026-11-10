@@ -1,0 +1,32 @@
+ department  |           title           
+-------------+---------------------------
+ Engineering | Chief Engineer
+ Engineering | Defense Architect
+ Engineering | Lead Mechanic
+ Management  | Operations Officer
+ Management  | Regional Manager
+ Medical     | First Assist Practitioner
+ Operations  | Heavy Equipment Operator
+ Operations  | Night Watch Supervisor
+ Operations  | Pest Control Associate
+ Operations  | Pest Control Lead
+ Research    | AI Architect
+ Research    | Consultant
+ Research    | Lead Scientist
+ Research    | Magic Specialist
+ Research    | Medical Examiner
+ Research    | Medical Lead
+ Sales       | Account Executive
+ Sales       | Acquisitions
+ Sales       | Escape Consultant
+ Sales       | Top Performer
+ Security    | Combat Specialist
+ Security    | Contractor
+ Security    | Director
+ Security    | Field Investigator
+ Security    | Guard Dog
+ Security    | Specialist
+ Security    | Trainee
+ Support     | Customer Success
+(28 rows)
+
