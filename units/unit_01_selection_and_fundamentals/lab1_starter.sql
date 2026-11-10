@@ -2,8 +2,8 @@
    CMAP 1815: Introduction to Modern SQL
    Unit 1 Lab: Unit 01 Selection And Fundamentals
    
-   Student Name: [YOUR NAME HERE]
-   Date:         [SUBMISSION DATE]
+   Student Name: OWEN ANDERSON
+   Date:         10/19/26
    Canvas Course: CMAP 1815
    ----------------------------------------------------------------------------
    Submission Rules:
