@@ -24,18 +24,20 @@ column is explicitly prefixed (e.g. e.first_name, l.city).
 --   - l.facility_type
 -- Sort by l.state ascending, then by e.last_name ascending.
 
-SELECT e.first_name,
-       e.last_name,
-       e.department,
-       l.city,
-       l.state,
-       l.facility_type
-FROM employees AS e
-INNER JOIN locations AS l
-        ON e.location_id = l.location_id
-ORDER BY l.state ASC,
-         e.last_name ASC;
-
+SELECT 
+    e.first_name, 
+    e.last_name, 
+    e.department, 
+    l.city, 
+    l.state, 
+    l.facility_type
+FROM 
+    employees e
+INNER JOIN 
+    locations l ON e.location_id = l.location_id 
+ORDER BY 
+    l.state ASC, 
+    e.last_name ASC;
 
 
 
@@ -54,22 +56,24 @@ ORDER BY l.state ASC,
 -- Filter for orders placed in the year 2023 or later.
 -- Sort by o.order_id ascending, then by item_subtotal descending.
 
-SELECT o.order_id,
-       o.order_date,
-       p.product_name,
-       ol.quantity,
-       ol.unit_price,
-       ol.quantity * ol.unit_price AS item_subtotal
-FROM orders AS o
-INNER JOIN order_lines AS ol
-        ON o.order_id = ol.order_id
-INNER JOIN products AS p
-        ON ol.product_id = p.product_id
-WHERE o.order_date >= '2023-01-01'
-ORDER BY o.order_id ASC,
-         item_subtotal DESC;
- 
-
+SELECT 
+    o.order_id, 
+    o.order_date, 
+    p.product_name, 
+    ol.quantity, 
+    ol.unit_price, 
+    (ol.quantity * ol.unit_price) AS item_subtotal
+FROM 
+    orders o
+INNER JOIN 
+    order_lines ol ON o.order_id = ol.order_id
+INNER JOIN 
+    products p ON ol.product_id = p.product_id
+WHERE 
+    EXTRACT(YEAR FROM o.order_date) >= 2023 -- Alternatively: o.order_date >= '2023-01-01'
+ORDER BY 
+    o.order_id ASC, 
+    item_subtotal DESC;
 
 
 -- ==================================================================
@@ -86,16 +90,7 @@ ORDER BY o.order_id ASC,
 --   - ol.quantity
 -- Notice which products return NULL for order_id and quantity!
 
-SELECT p.product_id,
-       p.product_name,
-       p.stock_quantity,
-       ol.order_id,
-       ol.quantity
-FROM products AS p
-LEFT JOIN order_lines AS ol
-       ON p.product_id = ol.product_id
-ORDER BY p.product_id ASC;
- 
+
 
 
 
@@ -113,17 +108,7 @@ ORDER BY p.product_id ASC;
 --   - p.retail_price
 -- Order by stock_quantity descending (identifying highest capital tied up).
 
-SELECT p.product_id,
-       p.sku,
-       p.product_name,
-       p.stock_quantity,
-       p.retail_price
-FROM products AS p
-LEFT JOIN order_lines AS ol
-       ON p.product_id = ol.product_id
-WHERE ol.product_id IS NULL
-ORDER BY p.stock_quantity DESC;
- 
+
 
 
 -- ==================================================================
@@ -140,18 +125,3 @@ ORDER BY p.stock_quantity DESC;
 -- Filter for orders with status = 'Completed'.
 -- Sort by o.order_id ASC.
 
-SELECT o.order_id,
-       l.city AS sales_office_city,
-       e.last_name AS rep_last_name,
-       ol.quantity,
-       ol.unit_price
-FROM locations AS l
-INNER JOIN employees AS e
-        ON l.location_id = e.location_id
-INNER JOIN orders AS o
-        ON e.employee_id = o.employee_id
-INNER JOIN order_lines AS ol
-        ON o.order_id = ol.order_id
-WHERE o.status = 'Completed'
-ORDER BY o.order_id ASC;
- 
